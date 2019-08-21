@@ -1,5 +1,5 @@
 //连分式插值
-
+//有一个bug未解决，不能输出第二组数的原因
 #include "pch.h"
 #include <iostream>
 #include<cmath>
