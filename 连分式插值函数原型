@@ -1,5 +1,6 @@
 //连分式插值
 //有一个bug未解决，不能输出第二组数的原因
+
 #include "pch.h"
 #include <iostream>
 #include<cmath>
@@ -16,9 +17,9 @@ void funpqj(double x[], double y[], double b[], int j)
 			u = (x[j] - x[k]) / (u - b[k]);
 
 	}
-	if (flag == 1) u = 1.0e+35;
+	if (flag == 1)  u = 1.0e+35;
 	b[j] = u;
-	//return;
+	return;
 }
 double funpqv(double x[], double b[], int n, double t)
 {
@@ -56,7 +57,7 @@ double funpq(double x[], double y[], int n, double eps, double t)
 		while ((k - j != 1) && (k - j != -1))
 		{
 			l = (k + j) / 2;
-			if (t < x[l - 1]) j = l;
+			if (t < x[l - 1])  j = l;
 			else k = 1;
 
 		}
@@ -67,12 +68,12 @@ double funpq(double x[], double y[], int n, double eps, double t)
 	l = 0;
 	for (i = 1; i <= m; i++)
 	{
-		k += j * l;
+		k=k+j * l;
 		if ((k < 1) || (k > n))
 		{
-			l += 1;
+			l=l+1;
 			j = -j;
-			k =k+ j * l;
+			k =k+ j *l;
 
 		}
 		xx[i - 1] = x[k - 1];
@@ -85,7 +86,7 @@ double funpq(double x[], double y[], int n, double eps, double t)
 	u = 1.0 + eps;
 	while ((j < m - 1) && (u >= eps))
 	{
-		j += 1;
+		j=j+1;
 		funpqj(xx, yy, b, j);
 		q = funpqv(xx, b, j, t);
 		u = (fabs(q - p));
@@ -98,10 +99,11 @@ int main()
 	double t, z;
 	double x[10] = { -1.0,-0.8,-0.65,-0.4,-0.3,0.0,0.2,0.45,0.8,1.0 };
 	double y[10] = { 0.0384615,0.0588236,0.0864865,0.2,0.307692,1.0,0.5,0.164948,0.0588236,0.0384615 };
-	t = -0.85;	z = funpq(x, y, 10, 0.000001, t);
+	t = -0.85;	z = funpq(x, y, 10, 0.0000001, t);
 	cout << "t=" << t << "    z=" << z << endl;
-	t = 0.25;	z = funpq(x, y, 10, 0.000001, t);
-	cout << "t=" << t << "    z=" << z << endl;
-	return (0);
+
+	t = 0.25;	z = funpq(x, y, 10, 0.0000001, t);      //0.25这个值出现了bug
+    cout << "t=" << t << "z=" << z << endl;
+	return 0;
 
 }
