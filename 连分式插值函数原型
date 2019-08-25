@@ -11,7 +11,7 @@ void funpqj(double x[], double y[], double b[], int j)
 	u = y[j];
 	for (k = 0; (k < j) && (flag == 0); k++)
 	{
-		if ((u - b[k] + 1.0 == 1.0)) flag = 1;
+		if ((u - b[k]) + 1.0 == 1.0) flag = 1;
 		else
 			u = (x[j] - x[k]) / (u - b[k]);
 
