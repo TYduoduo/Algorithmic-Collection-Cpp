@@ -1,0 +1,42 @@
+#include "pch.h"
+#include <iostream>
+using namespace std;
+void main()
+{
+loop:
+	{
+		cout << "请输入操作数一：" << '\n' << "请输入一个运算符：" << '\n' << "请操作数二：" << endl;
+		char op;
+		double x, y;
+		cin >> x;
+		cin >> op;
+		cin >> y;
+		cout << "输入的运算符为：" << op << endl;
+		switch (op)
+		{
+		case '+':cout << "加和为：" << x + y << endl;
+			break;
+		case '-':cout << "相减为：" << x - y << endl;
+			break;
+		case '*':cout << "乘积为：" << x * y << endl;
+			break;
+		case '/':if (y != 0)
+			cout << "做商为：" << x / y << endl;
+				 else
+			cout << "被除数不能为0！" << endl;
+			break;
+		default: cout << "请确保您输入的操作符是+-*/之一！" << endl;
+		}
+		cout << '\n' << "输入L离开该运行窗口；输入C继续进行运算" << endl;
+		char vv;
+		cin >> vv;
+		if (vv == 'L')
+			cout << "感谢使用该简易计算器！" << endl;
+
+		else if (vv == 'C')
+			goto loop;
+		else
+			cout << "请输入提示字符（L或S）！" << endl;
+	}
+}
+
