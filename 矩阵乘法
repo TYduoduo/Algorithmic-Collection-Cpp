@@ -1,0 +1,42 @@
+//矩阵相乘
+#include "pch.h"
+#include <iostream>
+#include <cmath>
+using namespace std;
+double init(double p)      
+{
+	p = 0.0;
+	return(p);
+}
+     
+void tmul(double a[], int ma, int na, double b[], int mb, int nb, double ab[])
+{
+	int i, j, k, u;
+	if (na != mb)
+	{
+		cout << "矩阵不能相乘！" << endl;
+	}
+	for (i = 0; i <= ma - 1; i++)
+		for (j = 0; j <= nb - 1; j++)
+		{
+			u = i * nb + j;
+			ab[u] = init(ab[u]);           
+			for (k = 0; k <= mb - 1; k++)
+				ab[u] = ab[u] + a[i*na + k] * b[k*nb + j];
+		}
+}
+
+  int main()
+  {
+	  int i,j;
+	  double a[3][4] = { {1,1,1,1,},{2,2,2,2},{3,3,3,3} };
+	  double ab[3][3], b[4][3] = { {1,1,1},{2,2,2},{3,3,3},{4,4,4} };
+	  tmul(&a[0][0],3,4,&b[0][0],4,3,&ab[0][0]);
+	  cout <<"乘积矩阵:" <<endl;
+	  for (i=0; i<3; i++)
+	  {
+		  for (j=0; j<3; j++)  { cout <<ab[i][j] <<"  ";  }
+		  cout <<endl;
+	   }
+	  return 0;
+  }
