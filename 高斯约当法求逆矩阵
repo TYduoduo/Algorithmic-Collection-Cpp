@@ -1,0 +1,108 @@
+//Guss_Jordan法求逆矩阵
+#include "pch.h"
+#include <iostream>
+#include <cmath>
+#define N 3
+using namespace std;
+double jdz(double p)       
+{
+	return(fabs(p));
+}
+double f(double p)         
+{
+	return(1.0 / p);
+}
+void Guss_Jordan(double a[], int n)       
+{
+	int *H, *L, i, j, k, m, u, v;
+	double d, q;
+	double p;
+	H = new int[n];
+	L = new int[n];
+	for (k = 0; k <= n - 1; k++)
+	{
+		d = 0.0;
+		for (i = k; i <= n - 1; i++)      
+			for (j = k; j <= n - 1; j++)
+			{
+				m = i * n + j;
+				q = jdz(a[m]); 
+				if (q > d) { d = q; H[k] = i; L[k] = j; }
+			}
+		if (H[k] != k)
+			for (j = 0; j <= n - 1; j++)   
+			{
+				u = k * n + j; v = H[k] * n + j;
+				p = a[u]; a[u] = a[v]; a[v] = p;
+			}
+		if (L[k] != k)
+			for (i = 0; i <= n - 1; i++)     
+			{
+				u = i * n + k; v = i * n + L[k];
+				p = a[u]; a[u] = a[v]; a[v] = p;
+			}
+		m = k * n + k;
+		a[m] = f(a[m]);          
+		for (j = 0; j <= n - 1; j++)      
+			if (j != k)
+			{
+				u = k * n + j; a[u] = a[u] * a[m];
+			}
+		for (i = 0; i <= n - 1; i++)     
+			if (i != k)
+				for (j = 0; j <= n - 1; j++)
+					if (j != k)
+					{
+						u = i * n + j;
+						a[u] = a[u] - a[i*n + k] * a[k*n + j];
+					}
+		for (i = 0; i <= n - 1; i++)
+			if (i != k)
+			{
+				u = i * n + k; a[u] = (a[u] - a[u] - a[u])*a[m];
+			}
+	}
+	for (k = n - 1; k >= 0; k--)      
+	{
+		if (L[k] != k)
+			for (j = 0; j <= n - 1; j++)
+			{
+				u = k * n + j; v = L[k] * n + j;
+				p = a[u]; a[u] = a[v]; a[v] = p;
+			}
+		if (H[k] != k)
+			for (i = 0; i <= n - 1; i++)
+			{
+				u = i * n + k; v = i * n + H[k];
+				p = a[u]; a[u] = a[v]; a[v] = p;
+			}
+	}
+	delete[] H; delete[] L;
+}
+  int main()
+  {
+	  int i,j;
+	  double a[N][N]=
+	  {     
+		{1,5,4},
+		{0,2,4},
+		{1,3,1},
+	  };
+	  double b[N][N];
+	  for (i=0; i<N; i++)
+	  for (j=0; j<N; j++) 
+		  b[i][j]=a[i][j];
+	  Guss_Jordan(&b[0][0],N);
+	  {
+		  cout <<"逆矩阵:" <<endl;;
+		  for (i=0; i<N; i++)
+		  {
+			  for (j = 0; j < N; j++)
+			  {
+				  cout << b[i][j] << "    ";  
+			  }
+		      cout << endl;
+		  }
+	  }
+	  return 0;
+  }
